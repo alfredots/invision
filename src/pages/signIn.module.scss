@@ -92,4 +92,12 @@
   .googleButtonContainer {
     margin: var(--big-spacing) var(--standard-spacing);
   }
+
+  .terms {
+    text-align: center;
+
+    a {
+      color: var(--green);
+    }
+  }
 }

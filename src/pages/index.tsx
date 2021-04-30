@@ -1,8 +1,13 @@
 import Head from 'next/head'
-
+import Link from 'next/link'
 import styles from './home.module.scss'
+import GoogleLogin from 'react-google-login'
 import { InputText } from '../components/InputText'
 import { useState } from 'react'
+
+const responseGoogle = (response) => {
+  console.log(response)
+}
 
 export default function Home() {
   const [user, setUser] = useState('')
@@ -42,10 +47,16 @@ export default function Home() {
             <p>Or</p>
           </div>
           <div className={styles.googleButtonContainer}>
-            <div className="g-signin2" data-onsuccess="onSignIn"></div>
+            <GoogleLogin
+              clientId="573428625274-mt242098he6plaljcu117938rn8kf61t.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
           </div>
           <span className={styles.createAccount}>
-            New Invision? <a href="#">Create Account</a>
+            New Invision? <Link href="/signIn">Create Account</Link>
           </span>
         </div>
       </section>
