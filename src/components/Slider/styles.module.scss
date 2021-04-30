@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .sliderContainer {
+    width: 500px;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    h2 {
+      text-align: center;
+      margin: var(--standard-spacing);
+      color: var(--white);
+    }
+
+    p {
+      text-align: center;
+      margin: var(--standard-spacing);
+      color: var(--white);
+    }
+  }
+}

@@ -5,19 +5,28 @@
 }
 
 :root {
+  //colors
   --white: #FFF;
+  --gray: rgba(0, 0, 0, 0.16);
+  --green: #A9C5BA;
+  --gray-dark: #707070;
+  --black: #000000;
+  //typography
+  --font-family-standard: Mulish;
 
-  --gray-50: #F7F8FA;
-  --gray-100: #E6E8EB;
-  --gray-200: #AFB2B1;
-  --gray-500: #808080;
-  --gray-800: #494D4B;
+  --font-weight-regular: 400;
+  --font-weight-heavy: 800;
+  --font-size-small: 0.875rem;
+  --font-size-standard: 1rem; // 16px
+  --font-size-regular: 1.875rem; // 30px
+  --font-size-heavy: 2.1875rem; // 35px
 
-  --baby-blue: #B1D4E0;
-  --blue: #2E8BC0;
-  --dark-blue: #0C2D48;
-  --midnight-blue: #145DA0;
+  //spacing
+  --small-spacing: 0.4rem;
+  --standard-spacing: 0.8rem;
+  --big-spacing: 1.2rem;
 
+  --border-radius: 6.25rem;
 }
 
 html {
@@ -35,22 +44,22 @@ body {
 }
 
 body, input, textarea, button {
-  font: 500 1rem Inter, sans-serif;
+  font: var(--font-weight-regular) var(--font-size-standard) var(--font-family-standard), sans-serif;
   color: var(--gray-100);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  font-family: Lexend, sans-serif;
-  color: var(--white);
+  font-weight: var(--font-weight-regular);
+  font-family: Mulish, sans-serif;
+  color: var(--gray-dark);
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: var(--font-size-regular);
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-regular);
 }
 
 button {

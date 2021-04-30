@@ -1,0 +1,34 @@
+.container {
+  margin: 0 auto;
+  padding: var(--small-spacing);
+  width: 100%;
+
+  @media(min-width: 600px) {
+    max-width: 19.875rem;
+  }
+
+  .inputText {
+    & > span {
+      width: 100%;
+      color: var(--gray-dark);
+    }
+
+    input {
+      border: 0;
+      border-bottom: 1px solid var(--black);
+      width: 100%;
+      height: 2rem;
+
+      transition: 0.3s;
+      transition-property: height;
+      &:focus {
+        outline: 0;
+        height: 2.5rem;
+      }
+    }
+
+    .error {
+
+    }
+  }
+}
