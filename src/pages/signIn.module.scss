@@ -10,9 +10,9 @@
 
   h1 {
     color: var(--black);
-    margin-bottom: 10%;
 
     @media (min-width: 600px) {
+      margin-bottom: 10%;
       position: absolute;
       right: 3rem;
       top: 7.6875rem;

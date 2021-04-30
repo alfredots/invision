@@ -16,37 +16,44 @@ export default function SignIn() {
   const [userMessageError, setUserMessageError] = useState('')
   const [password, setPassword] = useState('')
   const [passwordMessageError, setPasswordMessageError] = useState('')
-
+  const [userIsValid, setUserIsValid] = useState(false)
   function validName() {
     if (name.length === 0) {
       setNameMessageError('Este campo não pode ser vazio')
+      return false
     } else {
       setNameMessageError('')
+      return true
     }
   }
 
   function validUser() {
     if (user.length === 0) {
       setUserMessageError('Este campo não pode ser vazio')
+      return false
     } else {
       setUserMessageError('')
+      return true
     }
   }
 
   function validPassword() {
-    if (0 < password.length && password.length <= 6) {
-      setPasswordMessageError('A senha não pode ter menos de 6 caracteres')
-    } else if (password.length === 0) {
-      setPasswordMessageError('Este campo não pode ser vazio')
+    if (password.length <= 6) {
+      if (password.length === 0) {
+        setPasswordMessageError('Este campo não pode ser vazio')
+      } else {
+        setPasswordMessageError('A senha não pode ter menos de 6 caracteres')
+      }
+      return false
     } else {
       setPasswordMessageError('')
+      return true
     }
   }
 
   function validInputs() {
-    validName()
-    validUser()
-    validPassword()
+    const allInputIsValid = validName() && validUser() && validPassword()
+    console.log({ allInputIsValid })
   }
 
   return (
