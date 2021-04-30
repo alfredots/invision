@@ -4,12 +4,16 @@ import styles from './signIn.module.scss'
 import { InputText } from '../components/InputText'
 import { useState } from 'react'
 import GoogleLogin from 'react-google-login'
+import { useSavedUser } from '../contexts/ContextUser'
+import { useRouter } from 'next/router'
 
 const responseGoogle = (response) => {
   console.log(response)
 }
 
 export default function SignIn() {
+  const router = useRouter()
+  const { saveUser } = useSavedUser()
   const [name, setName] = useState('')
   const [nameMessageError, setNameMessageError] = useState('')
   const [user, setUser] = useState('')
@@ -28,8 +32,12 @@ export default function SignIn() {
   }
 
   function validUser() {
+    const emailIsValid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (user.length === 0) {
       setUserMessageError('Este campo não pode ser vazio')
+      return false
+    } else if (!emailIsValid.test(String(user).toLowerCase())) {
+      setUserMessageError('O e-mail está incorreto')
       return false
     } else {
       setUserMessageError('')
@@ -53,7 +61,15 @@ export default function SignIn() {
 
   function validInputs() {
     const allInputIsValid = validName() && validUser() && validPassword()
-    console.log({ allInputIsValid })
+    if (allInputIsValid) {
+      saveUser({
+        name: name,
+        username: user,
+        password: password
+      })
+      alert('usuário cadastrado com sucesso!')
+      router.push('/')
+    }
   }
 
   return (

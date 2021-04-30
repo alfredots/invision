@@ -26,6 +26,7 @@ export function InputText({
           value={value}
           placeholder={placeholder}
           onChange={(e) => setValue(e.target.value)}
+          className={`${styles.input} ${error?.length > 0 ? styles.inputError : ''}`}
         />
         {error?.length > 0 && <span className={styles.error}>{error}</span>}
       </div>
