@@ -7,10 +7,6 @@ import GoogleLogin from 'react-google-login'
 import { useSavedUser } from '../contexts/ContextUser'
 import { useRouter } from 'next/router'
 
-const responseGoogle = (response) => {
-  console.log(response)
-}
-
 export default function SignIn() {
   const router = useRouter()
   const { saveUser } = useSavedUser()

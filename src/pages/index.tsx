@@ -50,7 +50,6 @@ export default function Home() {
   }
 
   function validPassword() {
-    console.log({ passwordMessageError })
     if (password.length <= 6) {
       if (password.length === 0) {
         setPasswordMessageError('Este campo não pode ser vazio')

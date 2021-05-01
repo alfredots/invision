@@ -8,10 +8,6 @@ import { useSavedUser } from '../contexts/ContextUser'
 import { useRouter } from 'next/router'
 import { router } from 'next/client'
 
-const responseGoogle = (response) => {
-  console.log(response)
-}
-
 export default function SignIn() {
   const { savedUser } = useSavedUser()
 
