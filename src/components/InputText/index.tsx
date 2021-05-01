@@ -20,15 +20,22 @@ export function InputText({
   return (
     <div className={styles.container}>
       <div className={styles.inputText}>
-        <span>{title}</span>
+        <span data-testid="input-text-title">{title}</span>
         <input
+          data-testid="input-text"
           type={type}
           value={value}
           placeholder={placeholder}
           onChange={(e) => setValue(e.target.value)}
-          className={`${styles.input} ${error?.length > 0 ? styles.inputError : ''}`}
+          className={`${styles.input} ${
+            error?.length > 0 ? styles.inputError : ''
+          }`}
         />
-        {error?.length > 0 && <span className={styles.error}>{error}</span>}
+        {error?.length > 0 && (
+          <span data-testid="input-text-error" className={styles.error}>
+            {error}
+          </span>
+        )}
       </div>
     </div>
   )

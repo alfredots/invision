@@ -60,7 +60,11 @@ export default function SignIn() {
   }
 
   function validInputs() {
-    const allInputIsValid = validName() && validUser() && validPassword()
+    const resultValidationName = validName()
+    const resultValidationUser = validUser()
+    const resultValidationPassword = validPassword()
+    const allInputIsValid =
+      resultValidationName && resultValidationUser && resultValidationPassword
     if (allInputIsValid) {
       saveUser({
         name: name,
@@ -73,9 +77,9 @@ export default function SignIn() {
   }
 
   return (
-    <div style={{ height: '100%' }}>
+    <div data-testid="sign-in" style={{ height: '100%' }}>
       <Head>
-        <title>Alfredo Tito</title>
+        <title>Sign In - Invision</title>
       </Head>
       <section className={styles.signIn}>
         <h1>Invision</h1>
@@ -103,7 +107,11 @@ export default function SignIn() {
             error={passwordMessageError}
             setValue={setPassword}
           />
-          <button className={styles.signInButton} onClick={validInputs}>
+          <button
+            data-testid="sign-in-button"
+            className={styles.signInButton}
+            onClick={validInputs}
+          >
             Sign up
           </button>
           <div className={styles.divider}>

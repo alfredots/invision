@@ -17,7 +17,7 @@ export function Slider() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sliderContainer}>
+      <div data-testid="slick-slider" className={styles.sliderContainer}>
         <Slick {...settings}>
           <div>
             <img src="/image-slider.png" alt="imagem teste" />
