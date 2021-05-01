@@ -5,7 +5,7 @@ import {
   fireEvent,
   getAllByTestId
 } from '@testing-library/react'
-import SignIn from './signIn'
+import SignIn from '../pages/signIn'
 import { UserContextProvider } from '../contexts/ContextUser'
 
 describe('<Home />', () => {
