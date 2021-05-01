@@ -24,6 +24,7 @@ export default function Home() {
   }
 
   function responseGoogle(response) {
+    console.log(response)
     saveUser({
       name: response.ft.Te,
       username: response.ft.Qt,
