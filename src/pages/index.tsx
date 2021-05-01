@@ -24,10 +24,10 @@ export default function Home() {
   }
 
   function responseGoogle(response) {
-    console.log(response)
     saveUser({
-      name: response.ft.Te,
-      username: response.ft.Qt,
+      name:
+        response.profileObj.givenName + ' ' + response.profileObj.familyName,
+      username: response.profileObj.email,
       password: null
     })
     router.push('/logged')
