@@ -2,75 +2,28 @@ import Head from 'next/head'
 import Link from 'next/link'
 import styles from './signIn.module.scss'
 import { InputText } from '../components/InputText'
-import { useState } from 'react'
 import GoogleLogin from 'react-google-login'
-import { useSavedUser } from '../contexts/ContextUser'
-import { useRouter } from 'next/router'
+import { useName } from '../hooks/useName'
+import { useUser } from '../hooks/useUser'
+import { usePassword } from '../hooks/usePassword'
+import { useValidateInputs } from '../hooks/useValidateInputs'
+import { useLoginWithGoogle } from '../hooks/useLoginWithGoogle'
 
 export default function SignIn() {
-  const router = useRouter()
-  const { saveUser } = useSavedUser()
-  const [name, setName] = useState('')
-  const [nameMessageError, setNameMessageError] = useState('')
-  const [user, setUser] = useState('')
-  const [userMessageError, setUserMessageError] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordMessageError, setPasswordMessageError] = useState('')
-  const [userIsValid, setUserIsValid] = useState(false)
-  function validName() {
-    if (name.length === 0) {
-      setNameMessageError('Este campo não pode ser vazio')
-      return false
-    } else {
-      setNameMessageError('')
-      return true
-    }
-  }
-
-  function validUser() {
-    const emailIsValid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (user.length === 0) {
-      setUserMessageError('Este campo não pode ser vazio')
-      return false
-    } else if (!emailIsValid.test(String(user).toLowerCase())) {
-      setUserMessageError('O e-mail está incorreto')
-      return false
-    } else {
-      setUserMessageError('')
-      return true
-    }
-  }
-
-  function validPassword() {
-    if (password.length <= 6) {
-      if (password.length === 0) {
-        setPasswordMessageError('Este campo não pode ser vazio')
-      } else {
-        setPasswordMessageError('A senha não pode ter menos de 6 caracteres')
-      }
-      return false
-    } else {
-      setPasswordMessageError('')
-      return true
-    }
-  }
-
-  function validInputs() {
-    const resultValidationName = validName()
-    const resultValidationUser = validUser()
-    const resultValidationPassword = validPassword()
-    const allInputIsValid =
-      resultValidationName && resultValidationUser && resultValidationPassword
-    if (allInputIsValid) {
-      saveUser({
-        name: name,
-        username: user,
-        password: password
-      })
-      alert('usuário cadastrado com sucesso!')
-      router.push('/')
-    }
-  }
+  const { name, nameMessageError, setName, nameIsValid } = useName()
+  const { user, setUser, userIsValid, userMessageError } = useUser()
+  const {
+    password,
+    setPassword,
+    passwordIsValid,
+    passwordMessageError
+  } = usePassword()
+  const { onClickSignIn } = useValidateInputs(
+    nameIsValid(),
+    userIsValid(),
+    passwordIsValid()
+  )
+  const { logIn } = useLoginWithGoogle()
 
   return (
     <div data-testid="sign-in" style={{ height: '100%' }}>
@@ -106,7 +59,7 @@ export default function SignIn() {
           <button
             data-testid="sign-in-button"
             className={styles.signInButton}
-            onClick={validInputs}
+            onClick={() => onClickSignIn(name, user, password)}
           >
             Sign up
           </button>
@@ -117,8 +70,8 @@ export default function SignIn() {
             <GoogleLogin
               clientId="573428625274-mt242098he6plaljcu117938rn8kf61t.apps.googleusercontent.com"
               buttonText="Login"
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
+              onSuccess={logIn}
+              onFailure={logIn}
               cookiePolicy={'single_host_origin'}
             />
           </div>

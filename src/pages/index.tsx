@@ -6,64 +6,21 @@ import { InputText } from '../components/InputText'
 import { useState } from 'react'
 import { useSavedUser } from '../contexts/ContextUser'
 import { useRouter } from 'next/router'
+import { useUser } from '../hooks/useUser'
+import { usePassword } from '../hooks/usePassword'
+import { useValidateInputs } from '../hooks/useValidateInputs'
+import { useLoginWithGoogle } from '../hooks/useLoginWithGoogle'
 
 export default function Home() {
-  const router = useRouter()
-  const { savedUser, saveUser } = useSavedUser()
-  const [user, setUser] = useState('')
-  const [userMessageError, setUserMessageError] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordMessageError, setPasswordMessageError] = useState('')
-
-  function logIn() {
-    const validUserResult = validUser()
-    const validPasswordResult = validPassword()
-    if (validUserResult && validPasswordResult) {
-      router.push('/logged')
-    }
-  }
-
-  function responseGoogle(response) {
-    saveUser({
-      name:
-        response.profileObj.givenName + ' ' + response.profileObj.familyName,
-      username: response.profileObj.email,
-      password: null
-    })
-    router.push('/logged')
-  }
-
-  function validUser() {
-    const emailIsValid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (user.length === 0) {
-      setUserMessageError('Este campo não pode ser vazio')
-      return false
-    } else if (!emailIsValid.test(String(user).toLowerCase())) {
-      setUserMessageError('O e-mail está incorreto')
-      return false
-    } else if (savedUser.username.localeCompare(user) !== 0) {
-      setUserMessageError('Este usuário não é válido')
-    } else {
-      setUserMessageError('')
-      return true
-    }
-  }
-
-  function validPassword() {
-    if (password.length <= 6) {
-      if (password.length === 0) {
-        setPasswordMessageError('Este campo não pode ser vazio')
-      } else {
-        setPasswordMessageError('A senha não pode ter menos de 6 caracteres')
-      }
-      return false
-    } else if (savedUser.password.localeCompare(password) !== 0) {
-      setPasswordMessageError('A senha está incorreta')
-    } else {
-      setPasswordMessageError('')
-      return true
-    }
-  }
+  const { user, setUser, userIsValid, userMessageError } = useUser()
+  const {
+    password,
+    setPassword,
+    passwordIsValid,
+    passwordMessageError
+  } = usePassword()
+  const { onClickSignUp } = useValidateInputs(userIsValid(), passwordIsValid())
+  const { logIn } = useLoginWithGoogle()
 
   return (
     <div style={{ height: '100%' }}>
@@ -92,7 +49,10 @@ export default function Home() {
           <a href="#" className={styles.forgotPassword}>
             Forgot password?
           </a>
-          <button className={styles.signInButton} onClick={logIn}>
+          <button
+            className={styles.signInButton}
+            onClick={() => onClickSignUp(user, password)}
+          >
             Sign in
           </button>
           <div className={styles.divider}>
@@ -102,8 +62,8 @@ export default function Home() {
             <GoogleLogin
               clientId="573428625274-mt242098he6plaljcu117938rn8kf61t.apps.googleusercontent.com"
               buttonText="Login"
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
+              onSuccess={logIn}
+              onFailure={logIn}
               cookiePolicy={'single_host_origin'}
             />
           </div>
